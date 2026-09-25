@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="./resources/ol.css">
+        <link rel="stylesheet" href="resources/fontawesome-all.min.css">
+        <link href="resources/photon-geocoder-autocomplete.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
+        <link rel="stylesheet" href="./resources/qgis2web.css">
+        <style>
+        html, body {
+            background-color: #ffffff;
+        }
+        .ol-control > * {
+            background-color: #f8f8f8!important;
+            color: #444444!important;
+            border-radius: 0px;
+        }
+        .ol-attribution a, .gcd-gl-input::placeholder, .search-layer-input-search::placeholder {
+            color: #444444!important;
+        }
+        .search-layer-input-search {
+            background-color: #f8f8f8!important;
+        }
+        .ol-control > *:focus, .ol-control >*:hover {
+            background-color: rgba(248, 248, 248, 0.7)!important;
+        } 
+        .ol-control {
+            background-color: rgba(255,255,255,.4) !important;
+            padding: 2px !important;
+        } 
+        </style>
+
+        <style>
+        #map {
+            width: 100%;
+            height: 100vh;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+<div style="
+position:absolute;
+top:10px;
+left:60px;
+z-index:9998;
+background:white;
+padding:6px 10px;
+font-size:16px;
+font-weight:bold;
+color:#003366;
+border-radius:4px;
+box-shadow:0 0 4px rgba(0,0,0,0.3);">
+J527 Te Kuiti Flood Model Viewer
+</div>
+<div id="welcomePopup" style="
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:15px;
+border:2px solid #666;
+border-radius:8px;
+box-shadow:0 0 20px rgba(0,0,0,0.5);
+z-index:99999;
+width:850px;
+max-height:80vh;
+overflow:auto;
+font-family:Arial, sans-serif;">
+ 
+<div style="text-align:center;">
+<h1 style="color:red;margin:0;">
+Kia Ora
+</h1>
+ 
+<h2 style="color:red;margin:5px 0;">
+Welcome to our Personalised Online Flood Model Viewer
+</h2>
+ 
+<h2 style="color:#003366;margin:5px 0;">
+Te Kuiti Flood Model
+</h2>
+ 
+<p style="margin:5px 0;font-size:16px;">
+<strong></strong>
+</p>
+</div>
+ 
+<hr style="margin:10px 0;">
+ 
+<p style="font-size:16px;margin:10px 0;">
+<strong>
+The flood model viewer information is illustrative, for informational purposes only,
+and should not be relied upon for legal, surveying, engineering, or design purposes.
+</strong>
+</p>
+ 
+<p style="font-size:16px;margin:10px 0;">
+<strong>
+By accessing and using this map, you agree to abide by the terms of this disclaimer
+and understand that the data presented is not suitable for public viewing,
+dissemination, or use without prior authorisation.
+</strong>
+</p>
+ 
+<p style="font-size:16px;margin:10px 0;">
+<strong>
+This information is for authorised project use only and must not be publicly distributed.
+The assessment is based on third-party data, including Regional Council flood information
+and LiDAR data. Te Miro Water Limited accepts no liability for the accuracy of this data
+or for any loss arising from the use of, or reliance upon, the information presented.
+</strong>
+</p>
+ 
+<p style="text-align:center;font-size:14px;color:#666;margin:10px 0;">
+© Te Miro Water Consultants Limited
+</p>
+ 
+<div style="text-align:center;margin-top:15px;">
+<button
+onclick="document.getElementById('welcomePopup').style.display='none';"
+style="
+padding:12px 30px;
+font-size:16px;
+font-weight:bold;
+background:#003366;
+color:white;
+border:none;
+border-radius:4px;
+cursor:pointer;">
+I Understand
+</button>
+</div>
+ 
+</div>
+        <div id="map">
+            <div id="popup" class="ol-popup">
+                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                <div id="popup-content"></div>
+            </div>
+        </div>
+        <script src="resources/qgis2web_expressions.js"></script>
+<script src="resources/proj4.js"></script>
+        <script>proj4.defs('EPSG:2193','+proj=tmerc +lat_0=0 +lon_0=173 +k=0.9996 +x_0=1600000 +y_0=10000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs');</script>
+        <script src="./resources/functions.js"></script>
+        <script src="./resources/ol.js"></script>
+        <script src="./resources/ol-layerswitcher.js"></script>
+        <script src="resources/photon-geocoder-autocomplete.min.js"></script>
+        <script src="resources/olms.js"></script>
+        <script src="layers/FloodAffectedBuildings10yr_Hist_v2_above150mm_11.js"></script><script src="layers/FloodAffectedBuildings100yr_Hist_v2_above150mm_12.js"></script><script src="layers/FloodAffectedBuildings_10yr_Histv2_Duke_St_Opt2_above150mm_13.js"></script><script src="layers/FloodAffectedBuildings_100yr_Histv2_Duke_St_Opt2_above150mm_14.js"></script><script src="layers/FloodAffectedbuildings_100yr_Historical_v3_Bunds_Opt3_above150mm_15.js"></script>
+        <script src="styles/FloodAffectedBuildings10yr_Hist_v2_above150mm_11_style.js"></script><script src="styles/FloodAffectedBuildings100yr_Hist_v2_above150mm_12_style.js"></script><script src="styles/FloodAffectedBuildings_10yr_Histv2_Duke_St_Opt2_above150mm_13_style.js"></script><script src="styles/FloodAffectedBuildings_100yr_Histv2_Duke_St_Opt2_above150mm_14_style.js"></script><script src="styles/FloodAffectedbuildings_100yr_Historical_v3_Bunds_Opt3_above150mm_15_style.js"></script>
+        <script src="./layers/layers.js" type="text/javascript"></script> 
+        <script src="./resources/Autolinker.min.js"></script>
+        <script src="./resources/qgis2web.js"></script>
+    </body>
+</html>
