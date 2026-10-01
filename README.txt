@@ -19,3 +19,4 @@ Example:
 "https://www.example.com/my-map/index.html"
 .
 .
+.
